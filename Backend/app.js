@@ -11,7 +11,7 @@ const tenantRoutes = require('./routes/tenant.route');
 const app = express();
 
 
-app.use(cors({ origin:true, credentials: true }));
+app.use(cors({ origin:"*", credentials: true }));
 
 
 app.use(express.json());
@@ -29,3 +29,5 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     ConnectToDB();
 });
+
+
