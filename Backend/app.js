@@ -10,11 +10,7 @@ const tenantRoutes = require('./routes/tenant.route');
 
 const app = express();
 
-// CORS: allow frontend
-app.use(cors({
-  origin: "https://your-frontend.vercel.app", // change to your frontend domain
-  credentials: true,
-}));
+app.use(cors({ origin: (origin, callback) => { callback(null, origin || true); }, credentials: true, }))
 
 app.use(express.json());
 app.use(cookieParser());
