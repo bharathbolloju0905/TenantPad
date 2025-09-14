@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Tenant = require('./models/tenant.model');
 const User = require('./models/user.model');
+const dotenv = require('dotenv');
+dotenv.config();
 
 async function seed() {
   await mongoose.connect(process.env.MONGO_URL);

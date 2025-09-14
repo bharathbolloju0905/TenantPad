@@ -98,6 +98,8 @@ const loginUser = async (req, res) => {
     });
 
     user.password = undefined;
+    const tenant = await Tenant.findById(user.tenant);
+   
     return res.status(200).json({
       message: "Login successful",
       token,
@@ -105,7 +107,7 @@ const loginUser = async (req, res) => {
         id: user._id,
         email: user.email,
         role: user.role,
-        tenant: user.tenant
+        tenant: tenant
       }
     });
   } catch (error) {
@@ -122,4 +124,16 @@ const logoutUser = (req, res) => {
   return res.status(200).json({ message: "Logout successful" });
 };
 
-module.exports = { registerUSer, loginUser, logoutUser };
+const getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).populate('tenant').select('-password')
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.status(200).json({ user });
+  } catch (error) {
+    return res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+module.exports = { registerUSer, loginUser, logoutUser, getProfile  };
