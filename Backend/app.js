@@ -11,7 +11,13 @@ const tenantRoutes = require('./routes/tenant.route');
 const app = express();
 
 
-app.use(cors({ origin:"*", credentials: true }));
+app.use(cors({
+  origin: (origin, callback) => {
+    callback(null, origin || true); 
+  },
+  credentials: true,
+}));
+
 
 
 app.use(express.json());
